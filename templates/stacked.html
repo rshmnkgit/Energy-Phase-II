@@ -1,0 +1,139 @@
+<!-- =========================================================================================== -->
+<!--                                   LANDING PAGE                                              -->
+<!-- =========================================================================================== -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <!-- <link rel="stylesheet" type="text/css" href="css/reset.css"> -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+        <!-- <link rel="stylesheet" type="text/css" href="../static/css/style.css"> -->
+        <title>Renewable Energy</title>
+    </head>
+    <body>
+
+<!-- =========================================================================================== -->
+<!--                                   MENU BAR                                                  -->
+<!-- =========================================================================================== -->
+<!-- <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: black"> -->
+<!-- <nav class="navbar navbar-expand-sm navbar-dark bg-dark" > -->
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">    
+    <a class="navbar-brand" href="/" id="homebtn">ENERGY</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ml-auto">
+        <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Plots
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="temperature.html">Renewable Energy</a>
+                <a class="dropdown-item" href="humidity.html">GDP</a>
+                <a class="dropdown-item" href="cloudiness.html">Effects</a>
+                <a class="dropdown-item" href="windspeed.html">About</a>
+            </div>
+          </li>   -->
+            <li class="nav-item">
+                <a class="nav-link" href="/home">World</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/renew_energy">Renewable Energy</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/gen_consume">Energy Sources</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/countrygdp">GDP</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/effects">Effects</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/datadisplay">Data</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/population">USA</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">About</a>
+            </li>
+        </ul>
+    </div>
+  </nav>
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+
+<div class="container" style="background-color:white">
+    <div class="row">
+        <div class="col-md-12">
+            <h6>Select Country</h6>
+            <select id="selectButton" onchange="optionChanged(this.value)"></select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div id="myDiv">            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="plot-perc">            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5" >
+            <div  id="plot-solar"> </div>
+        </div>
+        <div class="col-md-1">
+
+        </div>
+
+        <div class="col-md-6">
+            <div id="plot-wind">           </div>
+        </div>
+
+    </div>
+
+    <!-- <div class="row">
+        <div class="col-md-6">
+            <div id="plot-wind">           </div>
+        </div>
+    </div>      -->
+
+    <div class="row"><br> </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-6">
+            <div id="plot-hydro">  </div>
+        </div>
+    </div>
+
+</div>
+ 
+
+
+    <!-- =========================================================================== -->
+    <!--                                FOOTER                                       -->
+    <!-- =========================================================================== -->
+    <div class="row"><br></div>
+    <div class="row"><br></div>
+    <div class="footer">
+        <div class="col-md-12" id="footerbar">
+        </div>
+        <span id="foot-note">Copyright: Data Visualization Bootcamp 2020</span>
+    </div>
+
+<!-- ======================   Import Bootstrap Javascript   ============================================================ -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- =================================================================================================================== -->
+    <script src="../static/js/stacked.js" ></script>
+    </body>
+
+</html>

@@ -1,0 +1,201 @@
+<!-- =========================================================================================== -->
+<!--                                   WORLD MAP PAGE                                              -->
+<!-- =========================================================================================== -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- <link rel="stylesheet" type="text/css" href="css/reset.css"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+        integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+        crossorigin="" />
+    <link rel="stylesheet"
+        href="https://raw.githubusercontent.com/mapshakers/leaflet-control-window/master/src/L.Control.Window.css">
+    <!-- Our CSS -->
+    <link rel="stylesheet" type="text/css" href="../static/css/map.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+
+    <title>Home</title>
+</head>
+
+<body>
+    <!-- =========================================================================================== -->
+    <!--                                   MENU BAR                                                  -->
+    <!-- =========================================================================================== -->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <a class="navbar-brand" href="/" id="homebtn">ENERGY</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/home">World</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/renew_energy">Renewable Energy</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/gen_consume">Energy Sources</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/countrygdp">GDP</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/effects">Effects</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/datadisplay">Data</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">About</a>
+            </li>
+        </ul>
+    </nav>
+    <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+
+
+    <!-- The div where we will inject our map -->
+    <div id="map-id"></div>
+
+
+<!--================================================================================-->
+
+    <!--========================== MODAL POP UP WINDOW  ================================-->
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content" role="dialog">
+
+            <div class="modal-header">
+                <!-- <div class="modal-header"> -->
+                <h2 id="description"></h2>
+                <button type="button" style="color: black" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">                      
+                <div class="row">
+                    <!-- 2010 -->
+                    <div class="col-md-6" style="text-align: center;">
+                        <div class="row">
+                            <strong> <p style="font-size:large" id="year-1"> </p> </strong>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="../static/images/water.jpg" />
+                            </div>
+                            <div class="col-md-3">
+                                <p id="unit-water-1"> </p>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="../static/images/sun.jpg" />
+                            </div>
+                            <div class="col-md-3">
+                                <p id="unit-sun-1"> </p>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="../static/images/wind.jpg" />
+                            </div>
+                            <div class="col-md-3">
+                                <p id="unit-wind-1"> </p>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="../static/images/gdp.jpg" />
+                            </div>
+                            <div class="col-md-3">
+                                <p id="gdp-1"> </p>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+
+                    <!-- 2019 -->
+                    <div class="col-md-6">
+                        <div class="row">
+                            <strong><p style="font-size: large;" id="year-2"> </p> </strong>
+                           <br>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="../static/images/water.jpg" />
+                            </div>
+                            <div class="col-md-3">
+                                <p id="unit-water-2"> </p>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="../static/images/sun.jpg" />
+                            </div>
+                            <div class="col-md-3">
+                                <p id="unit-sun-2"> </p>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="../static/images/wind.jpg" />
+                            </div>
+                            <div class="col-md-3">
+                                <p id="unit-wind-2"> </p>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="../static/images/gdp.jpg" />
+                            </div>
+                            <div class="col-md-3">
+                                <p id="gdp-2"> </p>
+                            </div>
+                        </div>
+                        <br>
+
+                    </div>
+                                                            
+            <!-- <div class="modal-footer">
+                <h3>Modal Footer</h3>
+            </div> -->
+
+        </div>
+    </div> 
+
+    <!--===================================================================================-->
+
+    <!-- Leaflet JS-->
+
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+        integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+        crossorigin=""></script>
+    <!-- d3 JavaScript -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <!-- Leaflet-Choropleth JavaScript -->
+    <script type="text/javascript" src="../static/js/choropleth.js"></script>
+    <script
+        src="https://raw.githubusercontent.com/mapshakers/leaflet-control-window/master/src/L.Control.Window.js"></script>
+
+    <!-- Our JS -->
+    <script type="text/javascript" src="../static/js/config.js"></script>
+    <script type="text/javascript" src="../static/js/leaflet.js"></script>
+
+</body>
+
+</html>
