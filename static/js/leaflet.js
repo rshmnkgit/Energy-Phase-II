@@ -116,30 +116,9 @@ function CountryInfo(getCountryName, event) {
     var results = [];
     var units = []
     var total_units = []
-
     if (getCountryName === "United States of America") {
         getCountryName = "United States"
     }
-
-    // function getEnergyInfo(forData, forYear) {
-    //     console.log("In the function--------")
-    //     filterData = forData.filter(d => d.country === getCountryName 
-    //                 && d.source !== "Total" && d.year === forYear);         
-
-    //     var mydict = {}
-    //     var result_list = []
-    //     for (var i=0; i < filterData.length; i++) {
-    //         mydict[filterData[i].source] = filterData[i].units
-    //         // result_list.push(mydict)
-    //         // src_list.push(filterData[i].source)
-    //         // unit_list.push(filterData[i].units)
-    //     }
-    //     // console.log(result_list)
-    //     console.log(mydict)
-
-    //     console.log(`mydict   ${mydict}`)
-    // }
-
     console.log(source_data_path)
     d3.json(source_data_path, function (energyData) {
         console.log(energyData);
@@ -153,93 +132,102 @@ function CountryInfo(getCountryName, event) {
             document.getElementById("year-1").innerText = 2010
 
             var hydro_units_1 = getEnergyInfo(energyData, getCountryName, 2010, "Hydro");
-            console.log(`hydro units:  ${hydro_units_1}`)
             document.getElementById("unit-water-1").innerText = hydro_units_1
 
             var wind_units_1 = getEnergyInfo(energyData, getCountryName, 2010, "Wind");
-            // console.log(`wind units:  ${wind_units_1}`)
             document.getElementById("unit-wind-1").innerText = wind_units_1
 
-            var solar_units_1 = getEnergyInfo(energyData, getCountryName, 2010, "Solar");
-            // console.log(`solar units:  ${solar_units_1}`)
+            var solar_units_1 = getEnergyInfo(energyData, getCountryName, 2010, "Solar");            
             document.getElementById("unit-sun-1").innerText = solar_units_1
 
-            // bio_units = getEnergyInfo(energyData, getCountryName, 2010, "Biofuels");
-            // console.log(`solar units:  ${bio_units}`)
-            // document.getElementById("unit-bio-1").innerText = bio_units
 
             document.getElementById("year-2").innerText = 2019
             var hydro_units_2 = getEnergyInfo(energyData, getCountryName, 2019, "Hydro");
-            console.log(`hydro units:  ${hydro_units_2}`)
             document.getElementById("unit-water-2").innerText = hydro_units_2
 
-            var wind_units_2 = getEnergyInfo(energyData, getCountryName, 2019, "Wind");
-            // console.log(`wind units:  ${wind_units_2}`)
+            var wind_units_2 = getEnergyInfo(energyData, getCountryName, 2019, "Wind");            
             document.getElementById("unit-wind-2").innerText = wind_units_2
 
-            var solar_units_2 = getEnergyInfo(energyData, getCountryName, 2019, "Solar");
-            // console.log(`solar units:  ${solar_units_2}`)
+            var solar_units_2 = getEnergyInfo(energyData, getCountryName, 2019, "Solar");            
             document.getElementById("unit-sun-2").innerText = solar_units_2
+
+            console.log(`solar units 1:  ${solar_units_1}`)
+            console.log(`solar units 2:  ${solar_units_2}`)
+            console.log(`hydro units 1:  ${hydro_units_1}`)
+            console.log(`hydro units 2:  ${hydro_units_2}`)
+            // console.log(`wind units:  ${wind_units_1}`)
+            // console.log(`wind units:  ${wind_units_2}`)
             
-            var hydro_perc = (parseFloat(hydro_units_2) - parseFloat(hydro_units_1))/parseFloat(hydro_units_1) * 100           
-            var solar_perc = (parseFloat(solar_units_2) - parseFloat(solar_units_1))/parseFloat(solar_units_1) * 100           
-            var wind_perc = (parseFloat(wind_units_2) - parseFloat(wind_units_1))/parseFloat(wind_units_1) * 100           
+            // var hydro_perc = (parseFloat(hydro_units_2) - parseFloat(hydro_units_1))/parseFloat(hydro_units_1) * 100
+            // var solar_perc = (parseFloat(solar_units_2) - parseFloat(solar_units_1))/parseFloat(solar_units_1) * 100
+            // var wind_perc = (parseFloat(wind_units_2) - parseFloat(wind_units_1))/parseFloat(wind_units_1) * 100
+
+            if(hydro_units_1 == 'No.data' || hydro_units_2 == 'No.data') {
+                hydro_display = 'No.data'
+            }
+            else
+            {                
+                var hydro_perc = (parseFloat(hydro_units_2) - parseFloat(hydro_units_1))/parseFloat(hydro_units_1) * 100
+                hydro_display = hydro_perc.toFixed(3) + "%"
+            }
+
+            if(solar_units_1 == 'No.data' || solar_units_2 == 'No.data') {
+                solar_display = 'No.data'
+            }
+            else
+            {                
+                var solar_perc = (parseFloat(solar_units_2) - parseFloat(solar_units_1))/parseFloat(solar_units_1) * 100
+                solar_display = solar_perc.toFixed(3) + "%"
+            }
+            
+            if(wind_units_1 == 'No.data' || wind_units_2 == 'No.data') {
+                wind_display = 'No.data'
+            }
+            else
+            {                
+                var wind_perc = (parseFloat(wind_units_2) - parseFloat(wind_units_1))/parseFloat(wind_units_1) * 100
+                wind_display = wind_perc.toFixed(3) + "%"
+            }
+
             console.log(`Hydro Inc Perc:  ${hydro_perc}`)
             console.log(`Solar Inc Perc:  ${solar_perc}`)
             console.log(`Wind Inc Perc:  ${wind_perc}`)
-            document.getElementById("perc-water").innerText = hydro_perc.toFixed(3)
-            document.getElementById("perc-sun").innerText = solar_perc.toFixed(3)
-            document.getElementById("perc-wind").innerText = wind_perc.toFixed(3)
-
-            var isHydro = iif(hydro_perc.toFixed(3),0,1)
-            var x = element.getElementsByTagName("img-hyd-perc").item(0);
-            var v = x.getAttribute("src");
-            if(isHydro)
-                v = "../static/images/increase.jpg";
-            else
-                v = "../static/images/decrease.jpg";
-            x.setAttribute("src", v);	
-
+            document.getElementById("perc-water").innerText = hydro_display
+            document.getElementById("perc-sun").innerText = solar_display
+            document.getElementById("perc-wind").innerText = wind_display
 
             d3.json(gdp_data_path, function(gdpData) {
                 console.log(gdpData);
                 gdpObj = gdpData.filter(d => d.country === getCountryName && d.year === 2010);        
                 console.log(gdpObj)
                 console.log(`${getCountryName}  GDP:  ${gdpObj[0].gdp}`)
-                gdp_value = gdpObj[0].gdp.toFixed(3)
-                if (gdp_value === "0.000") {
+                gdp_value_1 = gdpObj[0].gdp.toFixed(3)
+                if (gdp_value_1 === "0.000") {
                     gdp_display = "No-data"
                 }
                 else {
-                    gdp_display = "$." + gdp_value
+                    gdp_display = "$." + gdp_value_1
                 }
                 document.getElementById("gdp-1").innerText = gdp_display
 
                 gdpObj = gdpData.filter(d => d.country === getCountryName && d.year === 2019);        
                 // console.log(gdpObj)
                 console.log(`${getCountryName}  GDP:  ${gdpObj[0].gdp}`)
-                gdp_value = gdpObj[0].gdp.toFixed(3)
-                if (gdp_value === "0.000") {
+                gdp_value_2 = gdpObj[0].gdp.toFixed(3)
+                if (gdp_value_2 === "0.000") {
                     gdp_display = "No.data"
                 }
                 else {
-                    gdp_display = "$." + gdp_value
+                    gdp_display = "$." + gdp_value_2
                 }
                 document.getElementById("gdp-2").innerText = gdp_display
+
+                var gdp_perc = (parseFloat(gdp_value_2) - parseFloat(gdp_value_1))/parseFloat(gdp_value_1) * 100
+                document.getElementById("perc-gdp").innerText = gdp_perc.toFixed(3) + "%"
             });            
-
-
-
-
-            // bio_units = getEnergyInfo(energyData, getCountryName, 2019, "Biofuels");
-            // console.log(`solar units:  ${bio_units}`)
-            // document.getElementById("unit-bio-2").innerText = bio_units            
-
         }
     });
 }
-
-
 
 
 // // Load in geojson data

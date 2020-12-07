@@ -7,7 +7,7 @@ d3.json(dbpath).then(function (dataSample) {
     var filteredData = dataSample.filter(data => data.source !== "Biofuels");
     var countries = filteredData.map(d => d.country)
     var uniqueNames = countries.filter((value, index, self) => self.indexOf(value) === index);
-    uniqueNames.sort()
+    // uniqueNames.sort()
     console.log(uniqueNames)
     uniqueNames.forEach(item =>
         d3.select("#selectButton")
@@ -289,6 +289,7 @@ function windChart(selectedId) {
           var layout = {
             title: 'Wind Energy Generation vs Consumption',
             xaxis1: {
+              title: 'Units (Twh)',
               range: [minWindG, maxWindG],
               domain: [0, 0.5],
               zeroline: false,
@@ -397,7 +398,8 @@ function hydroChart(selectedId) {
           var layout = {
             title: 'Hydro Energy Generation vs Consumption',
             xaxis1: {
-              range: [minHydroG, maxHydroG],
+              title: 'Units (Twh)',
+              range: [0, maxHydroG],
               domain: [0, 0.5],
               zeroline: false,
               showline: false,

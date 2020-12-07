@@ -39,7 +39,7 @@ d3.json(energypath).then(function (dataSample) {
     var data = [trace1, trace2, trace3]
 
     var layout = {
-        title: 'Energy generation and consumption over the past 10 years',
+        title: 'Energy generation and consumption over the past 20 years',
         xaxis: {title: "Year"},
         yaxis: {
             title: "Trillion Btu",

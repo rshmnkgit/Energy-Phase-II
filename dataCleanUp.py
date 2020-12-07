@@ -153,31 +153,79 @@ def mergedCountries(sourcedf, gdpdf, airdf):
     merge2 = pd.merge(merge1, gdpdf, on="Country", how="inner")
     return merge2
 
-# ## Merging all the data tables
+# ## Merging all the production and consumption data tables
 def mergeEnergyData(dbpath):
     energysource = cleanEnergySource(dbpath)
     energyshare = cleanEnergyShare(dbpath)
-    merge_src_share = pd.merge(energysource, energyshare, on=["Country", "Code", "Year", "Source"], how="outer")
+    merge_src_share = pd.merge(energysource, energyshare, on=["Country", "Code", "Year", "Source"], how="inner")
+    merge_src_share.drop(merge_src_share[merge_src_share['Country']=='World'].index, inplace=True)
+    merge_src_share.sort_values(['Country', 'Source', 'Year'], inplace=True)
     # merge_src_share.drop(columns=['Code_x', 'Code_y'], inplace=True)
     merge_src_share.fillna(0, inplace=True)
     return merge_src_share
 
+#--------------------------------------------------------
+def usaEnergyProduction(dbpath):
+    energy_cons = pd.read_excel(dbpath + "Table_1.3_Primary_Energy_Consumption_by_Source.xlsx",'Annual Data',skiprows=range(0,10))
+    energy_cons = energy_cons.rename(columns={'Annual Total':'Year', 'Coal Consumption':'Coal_Consumption',
+        'Natural Gas Consumption (Excluding Supplemental Gaseous Fuels)':'Gas_Consumption',
+        'Petroleum Consumption (Excluding Biofuels)':"Petro_Consumption",
+        'Total Fossil Fuels Consumption':'Fossil_Consumption', 'Nuclear Electric Power Consumption':'Electric_consumption',
+        'Hydroelectric Power Consumption':'Hydro_Consumption', 'Geothermal Energy Consumption':'Geo_Consumption',
+        'Solar Energy Consumption':'Solar_Consumption', 'Wind Energy Consumption':'Wind_Consumption',
+        'Biomass Energy Consumption':'Bio_Consumption', 'Total Renewable Energy Consumption':'Total_Renewable_Consumption',
+        'Total Primary Energy Consumption':'Total_primary_Cosumption'})
+    # dropping column with all null values 
+    energy_cons.dropna(axis =1 ,how = "all", inplace = True)
+    energy_cons.drop(index=0, inplace=True)
+    energy_cons['Year'] = energy_cons['Year'].astype(int)
+    #Replace Not available with zeros
+    energy_cons = energy_cons.replace('Not Available',0)
+
+    # ----------------------------------------------------------------
+    # # Energy Production
+    # ----------------------------------------------------------------
+
+    energy_prod = pd.read_excel(dbpath + "Table_10.1_Renewable_Energy_Production_and_Consumption_by_Source.xlsx",'Annual Data',skiprows=range(0,10))
+    energy_prod = energy_prod.rename(columns={'Annual Total':'Year', 'Wood Energy Production':'Wood_production', 'Biofuels Production':'Biofuel_Production',
+        'Total Biomass Energy Production':'Total_Biomass_Prod', 'Total Renewable Energy Production':'Total_Renewable_Production',
+        'Hydroelectric Power Consumption':'Hydro_consumption', 'Geothermal Energy Consumption':'Geo_Consumption',
+        'Solar Energy Consumption':'Solar_Consumption', 'Wind Energy Consumption':'Wind_Consumption',
+        'Wood Energy Consumption':'Wood_Consumption', 'Waste Energy Consumption':'WasteEnergy_Consumption',
+        'Biofuels Consumption':'Biofuel_consumption', 'Total Biomass Energy Consumption':'Total_Biomass_Consumption',
+        'Total Renewable Energy Consumption':'Total_Renewable_Consumption'})
+    # dropping column with all null values
+    energy_prod.dropna(axis =1 ,how = "all",inplace = True)
+    energy_prod.drop(index=0, inplace=True)
+    energy_prod['Year'] = energy_prod['Year'].astype(int)
+    #Replace Not available with zeros
+    energy_prod = energy_prod.replace('Not Available', 0)
+    energy_prod['Total_Energy_Consumption'] = energy_cons['Total_primary_Cosumption']
+    # Convert the quadrillion to Trillion
+    energy_prod['Total_Energy_Consumption'] = energy_prod['Total_Energy_Consumption'] * 1000
+    return energy_prod
+# -------------------------------------------------------
+
+
+def initMongoConnection():
+    conn_str = f'mongodb+srv://{username}:{password}@cluster0.zdhdq.mongodb.net/{dbname}?retryWrites=true&w=majority'
+    # conn_str = 'mongodb://localhost:27017'
+    return conn_str
+
 
 # ## Connect and Delete the collection from Mongo
 def deleteFromMongo(collectionName):
-    conn = f'mongodb+srv://{username}:{password}@cluster0.zdhdq.mongodb.net/{dbname}?retryWrites=true&w=majority'
-    # conn = 'mongodb://localhost:27017'
+    conn = initMongoConnection()
     client = pymongo.MongoClient(conn)
     db = client.renewable_energy
     db[collectionName].drop()
-    # db.drop.collection(collectionName)
+    client.close()
 
 
 # ## Connect and Update to Mongo
 def updateIntoMongo(collectionName, dfName):
     # CREATE Connection with MongoDB Local
-    conn = f'mongodb+srv://{username}:{password}@cluster0.zdhdq.mongodb.net/{dbname}?retryWrites=true&w=majority'
-    # conn = 'mongodb://localhost:27017'
+    conn = initMongoConnection()
     client = pymongo.MongoClient(conn)
     # Define the Database in Mongo
     db = client.renewable_energy    
@@ -187,8 +235,7 @@ def updateIntoMongo(collectionName, dfName):
     client.close()
 
 def insertIntoMongo(collectionName, temp_dict):
-    conn = f'mongodb+srv://{username}:{password}@cluster0.zdhdq.mongodb.net/{dbname}?retryWrites=true&w=majority'
-    # conn='mongodb://localhost:27017'
+    conn = initMongoConnection()
     client=pymongo.MongoClient(conn)
     # Define the Database in Mongo
     db = client.renewable_energy
@@ -205,7 +252,8 @@ def cleanUp(dbpath):
     air_df = cleanAirPollution(dbpath)
     merge_df = mergeEnergyData(dbpath)
     tenyear_df = lastTenyearRenewPercent(dbpath)
-    scrape_dict = webscrape() 
+    # scrape_dict = webscrape() 
+    usa_df = usaEnergyProduction(dbpath)
 
     deleteFromMongo("energysource")
     deleteFromMongo("energyshare")
@@ -214,7 +262,8 @@ def cleanUp(dbpath):
     deleteFromMongo("energymerged")
     deleteFromMongo("lasttenyearrenewpercent")
     deleteFromMongo("top_twelve_gdp")
-    deleteFromMongo("Webscrapedata")
+    # deleteFromMongo("Webscrapedata")
+    deleteFromMongo("usaenergyproduction")
 
     updateIntoMongo("energysource", src_df)
     updateIntoMongo("energyshare", share_df)
@@ -223,7 +272,8 @@ def cleanUp(dbpath):
     updateIntoMongo("energymerged", merge_df)
     updateIntoMongo("lasttenyearrenewpercent", tenyear_df)
     updateIntoMongo("top_twelve_gdp", top_gdp)
-    insertIntoMongo("Webscrapedata", scrape_dict)
+    # insertIntoMongo("Webscrapedata", scrape_dict)
+    updateIntoMongo("usaenergyproduction", usa_df)
 
     print("........Process Completed......")
 

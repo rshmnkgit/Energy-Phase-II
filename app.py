@@ -234,7 +234,7 @@ def getData_energysunburst():
 
 @app.route('/usgeneration')
 def getData_USGeneration():
-    usprod = db['energyproduction']
+    usprod = db['usaenergyproduction']
     output = []
     for row in usprod.find():
         output.append({ 'year': row['Year'],
