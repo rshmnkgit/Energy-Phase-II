@@ -1,6 +1,4 @@
 
-// dbpath = "../static/data/energymerged.json"
-
 // dbpath = "http://127.0.0.1:5000/energymerged"
 var dbpath = "https://renewable-energy-herokuapp.herokuapp.com/energymerged"
 
@@ -18,8 +16,6 @@ d3.json(dbpath).then((data) => {
     console.log(data)
     var tableData = data.filter(data => data.year > 1999);
     tableData = tableData.filter(data => data.source !== 'Total')
-
-    
 
     // Read the values entered by the user in the form elements
     var button = d3.select(".btn-default");
@@ -80,5 +76,4 @@ d3.json(dbpath).then((data) => {
 
     button.on("click", formSubmit);
     // form.on("change", formSubmit);
-
 });

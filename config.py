@@ -1,5 +1,3 @@
-# username = "YOUR MONGO CLOUD USERNAME HERE"
-# password = "YOUR MONGO CLOUD PASSWORD HERE"
-username = "energy_user"
-password = "energy_pwd"
+username = "YOUR MONGO CLOUD USERNAME HERE"
+password = "YOUR MONGO CLOUD PASSWORD HERE"
 dbname = "renewable_energy"
