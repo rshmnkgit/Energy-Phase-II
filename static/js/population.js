@@ -1,6 +1,7 @@
 
 // var dbpath = "http://127.0.0.1:5000/uspopulation"
-var energypath = "http://127.0.0.1:5000/usgeneration"
+// var energypath = "http://127.0.0.1:5000/usgeneration"
+var energypath = "https://renewable-energy-herokuapp.herokuapp.com/usgeneration"
 
 
 // Energy Production and Consumption

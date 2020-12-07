@@ -1,5 +1,6 @@
 
-dbpath = "http://127.0.0.1:5000/description"
+// var dbpath = "http://127.0.0.1:5000/description"
+var dbpath = "https://renewable-energy-herokuapp.herokuapp.com/description"
 
 
 
