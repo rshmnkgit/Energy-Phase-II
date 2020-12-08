@@ -10,9 +10,9 @@ d3.json(energypath).then(function (dataSample) {
 
     console.log(filterData)
     years = filterData.map(d => d.year)
-    production =  filterData.map(d => d.production)
-    consumption = filterData.map(d => d.consumption)
-    totals = filterData.map(d => d.total)
+    production =  filterData.map(d => d.production_twh)
+    consumption = filterData.map(d => d.consumption_twh)
+    totals = filterData.map(d => d.total_twh)
     console.log(production)
 
     var trace1 = {
@@ -43,7 +43,8 @@ d3.json(energypath).then(function (dataSample) {
         title: 'Energy generation and consumption over the past 20 years',
         xaxis: {title: "Year"},
         yaxis: {
-            title: "Trillion Btu",
+            // title: "Trillion Btu",
+            title: "Units (Twh)",
             autotick: true,
             ticks: 'outside',
             tick0: 0,

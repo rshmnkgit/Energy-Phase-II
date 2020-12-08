@@ -201,8 +201,12 @@ def usaEnergyProduction(dbpath):
     #Replace Not available with zeros
     energy_prod = energy_prod.replace('Not Available', 0)
     energy_prod['Total_Energy_Consumption'] = energy_cons['Total_primary_Cosumption']
-    # Convert the quadrillion to Trillion
+    # Convert the Quadrillion Btu to Trillion Btu
     energy_prod['Total_Energy_Consumption'] = energy_prod['Total_Energy_Consumption'] * 1000
+    # Convert the Trillion BTU into Twh
+    energy_prod['Total_Renewable_Production_Twh'] = energy_prod['Total_Renewable_Production'] * .293071070172222
+    energy_prod['Total_Renewable_Consumption_Twh'] = energy_prod['Total_Renewable_Consumption'] * .293071070172222
+    energy_prod['Total_Energy_Consumption_Twh'] = energy_prod['Total_Energy_Consumption'] * .293071070172222    
     return energy_prod
 # -------------------------------------------------------
 

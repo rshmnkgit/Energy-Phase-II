@@ -240,7 +240,10 @@ def getData_USGeneration():
         output.append({ 'year': row['Year'],
                         'production': row['Total_Renewable_Production'],
                         'consumption': row['Total_Renewable_Consumption'],
-                        'total': row['Total_Energy_Consumption']                      
+                        'total': row['Total_Energy_Consumption'],
+                        'production_twh': row['Total_Renewable_Production_Twh'],
+                        'consumption_twh': row['Total_Renewable_Consumption_Twh'],
+                        'total_twh': row['Total_Energy_Consumption_Twh']
                        })  
     usprod_json = jsonify(output)
     return usprod_json
