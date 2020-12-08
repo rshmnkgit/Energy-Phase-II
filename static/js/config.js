@@ -1,4 +1,3 @@
 // API key
-//const API_KEY = "YOUR MAPBOX API KEY HERE"
-// API key
-const API_KEY = "pk.eyJ1IjoicmVzaGFtNjE3IiwiYSI6ImNrZnBqajJ2ZjBjcTAydGxkNWN2N2V4c3AifQ.emEZ2o3EUPgOhsseG4SC2A"
+const API_KEY = "YOUR MAPBOX API KEY HERE"
+
